@@ -1,7 +1,7 @@
 # **Playwright Test Reporter**
 
-[![Build Status](https://github.com/deepakkamboj/playwright-test-reporter/actions/workflows/ci.yml/badge.svg)](https://github.com/deepakkamboj/playwright-test-reporter/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/playwright-test-reporter.svg)](https://www.npmjs.com/package/playwright-test-reporter)
+[![Build Status](https://github.com/softleo-llc/playwright-reporter/actions/workflows/ci.yml/badge.svg)](https://github.com/softleo-llc/playwright-reporter/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/playwright-reporter.svg)](https://www.npmjs.com/package/playwright-reporter)
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9%2B-blue)](https://www.typescriptlang.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-1.51%2B-green)](https://playwright.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -64,12 +64,12 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
 Install the package using npm:
 
 ```bash
-npm install playwright-test-reporter --save-dev
+npm install playwright-reporter --save-dev
 ```
 
 ## **Usage**
 
-Integrate the `playwright-test-reporter` into your Playwright configuration file (`playwright.config.ts`):
+Integrate the `playwright-reporter` into your Playwright configuration file (`playwright.config.ts`):
 
 ```typescript
 import {defineConfig} from '@playwright/test';
@@ -79,7 +79,7 @@ export default defineConfig({
     retries: 2, // Example of using retries
     reporter: [
         [
-            'playwright-test-reporter',
+            'playwright-reporter',
             {
                 slowTestThreshold: 3,
                 maxSlowTestsToShow: 5,
@@ -131,7 +131,7 @@ To use the GenAI-powered fix suggestion feature:
     ```typescript
     reporter: [
         [
-            'playwright-test-reporter',
+            'playwright-reporter',
             {
                 generateFix: true,
             },
@@ -156,7 +156,7 @@ To enable email notifications after each test run:
 ```typescript
 reporter: [
     [
-        'playwright-test-reporter',
+        'playwright-reporter',
         {
             sendEmail: true,
             smtpUser: 'your-smtp-user@domain.com',
@@ -206,7 +206,7 @@ Add the `pushToTelemetry` option to your configuration:
 ```typescript
 reporter: [
     [
-        'playwright-test-reporter',
+        'playwright-reporter',
         {
             // ...other options...
             pushToTelemetry: true,
@@ -283,7 +283,7 @@ db.all(
 The reporter includes utilities for working with test history:
 
 ```typescript
-import {HistoryUtils} from 'playwright-test-reporter';
+import {HistoryUtils} from 'playwright-reporter';
 
 // Check if a test was failing in the previous run
 const wasFailing = HistoryUtils.wasTestFailingPreviously('test-id-123');
