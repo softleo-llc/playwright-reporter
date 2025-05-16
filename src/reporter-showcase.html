@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Playwright Test Reporter - Showcase</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap CSS CDN -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- FontAwesome CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <style>
+            body {
+                font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+                background: #f8fafc;
+                color: #222;
+            }
+            .hero {
+                background: linear-gradient(90deg, #2196f3 0%, #21cbf3 100%);
+                color: #fff;
+                padding: 80px 0 60px 0;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+            .hero-subtitle {
+                font-size: 1.5rem;
+                font-weight: 400;
+                margin-bottom: 30px;
+            }
+            .feature-card {
+                border: none;
+                border-radius: 1rem;
+                box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+                transition: transform 0.2s;
+                background: #fff;
+            }
+            .feature-card:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 4px 24px rgba(33, 150, 243, 0.13);
+            }
+            .feature-icon {
+                font-size: 2.5rem;
+                color: #2196f3;
+                margin-bottom: 15px;
+            }
+            .screenshot-section {
+                background: #fff;
+                border-radius: 1rem;
+                box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+                padding: 40px 0;
+                margin: 40px 0;
+            }
+            .screenshot-img {
+                border-radius: 0.75rem;
+                box-shadow: 0 2px 12px rgba(33, 150, 243, 0.1);
+                width: 100%;
+                max-width: 500px;
+            }
+            .section-title {
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 24px;
+                color: #2196f3;
+            }
+            .footer {
+                background: #222;
+                color: #fff;
+                padding: 30px 0 10px 0;
+                text-align: center;
+                margin-top: 60px;
+            }
+            .github-btn {
+                background: #fff;
+                color: #2196f3;
+                border: none;
+                border-radius: 2rem;
+                padding: 10px 24px;
+                font-weight: 600;
+                font-size: 1.1rem;
+                margin-top: 20px;
+                transition:
+                    background 0.2s,
+                    color 0.2s;
+            }
+            .github-btn:hover {
+                background: #2196f3;
+                color: #fff;
+                border: 1px solid #fff;
+            }
+            @media (max-width: 991px) {
+                .hero-title {
+                    font-size: 2.2rem;
+                }
+                .hero-subtitle {
+                    font-size: 1.1rem;
+                }
+                .section-title {
+                    font-size: 1.3rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Hero Banner -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-title"><i class="fa-solid fa-vial-circle-check"></i> Playwright Test Reporter</div>
+                <div class="hero-subtitle">
+                    Modern, AI-powered, and beautiful reporting for Playwright automation.<br />
+                    <span class="fw-bold">Debug smarter. Ship faster. Impress your team.</span>
+                </div>
+                <a href="https://github.com/deepakkamboj/playwright-test-reporter" target="_blank" class="github-btn">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="container py-5">
+            <div class="section-title text-center mb-5"><i class="fa-solid fa-bolt"></i> Key Features</div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
+                        <h5 class="card-title">Smart Colorized Output</h5>
+                        <p class="card-text">
+                            Clear, color-coded results for passed, failed, skipped, and retried tests. Instantly spot
+                            issues and trends.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h5 class="card-title">AI-Powered Fix Suggestions</h5>
+                        <p class="card-text">
+                            Automatic error categorization and GenAI-powered fix suggestions for common test failures
+                            and flaky tests.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <h5 class="card-title">Comprehensive Metrics</h5>
+                        <p class="card-text">
+                            Total execution time, average duration, slowest tests, pass/fail/skip stats, and more for
+                            deep insights.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                        <h5 class="card-title">Automated Email Notifications</h5>
+                        <p class="card-text">
+                            Send beautiful summary emails with test results, build info, and links to your team after
+                            every run.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-cloud"></i></div>
+                        <h5 class="card-title">CI/CD Integration</h5>
+                        <p class="card-text">
+                            Detects CI environments (GitHub Actions, Azure, etc.), links to builds, artifacts, and test
+                            results automatically.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100 text-center p-4">
+                        <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+                        <h5 class="card-title">Team Ownership & History</h5>
+                        <p class="card-text">
+                            Assign tests to teams, track flaky/failing tests, and compare with previous runs for
+                            continuous improvement.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshot & Details Section -->
+        <section class="container screenshot-section my-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+                    <img
+                        src="https://raw.githubusercontent.com/deepakkamboj/playwright-test-reporter/main/assets/screenshot-summary.png"
+                        alt="Reporter Summary Screenshot"
+                        class="screenshot-img"
+                    />
+                </div>
+                <div class="col-lg-6">
+                    <div class="section-title mb-3">
+                        <i class="fa-solid fa-desktop"></i> Beautiful, Actionable Reports
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-check text-success"></i> Instant summary of all test outcomes
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-check text-success"></i> Failure categorization and stack traces
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-check text-success"></i> Links to build, artifacts, and test results
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-check text-success"></i> Team ownership and flaky test detection
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa-solid fa-check text-success"></i> Exportable JSON for CI/CD and dashboards
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="container py-5">
+            <div class="section-title text-center mb-4"><i class="fa-solid fa-gears"></i> How It Works</div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">
+                            <strong>Install:</strong> <code>npm install playwright-test-reporter --save-dev</code>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Configure:</strong> Add the reporter to your <code>playwright.config.ts</code> with
+                            your desired options.
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Run Tests:</strong> Use Playwright MCP or CLI as usual. The reporter will generate
+                            rich output and JSON files.
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Review Results:</strong> View the summary, failures, and AI suggestions in your
+                            terminal, email, or CI dashboard.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div>
+                <span>Made with <i class="fa-solid fa-heart text-danger"></i> for Playwright &middot; </span>
+                <a
+                    href="https://github.com/deepakkamboj/playwright-test-reporter"
+                    target="_blank"
+                    class="text-white text-decoration-underline"
+                >
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+            <div class="mt-2" style="font-size: 0.95rem">
+                &copy; 2024 Playwright Test Reporter &mdash; All rights reserved.
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS (optional, for interactivity) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

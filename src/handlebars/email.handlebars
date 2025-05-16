@@ -1,0 +1,241 @@
+<!--
+  Expects a "summary" object from reporter/sender:
+    summary: {
+      testRunName, totalTests, totalPassed, totalFailures, totalSkipped, passRate, totalDuration, status, date, buildInfo, failures: [{title, owner, retries, status, error}]
+    }
+-->
+
+<html>
+
+<body>
+    <style>
+        body {
+            font-family: Segoe UI, Helvetica, Arial, sans-serif;
+            font-weight: normal;
+        }
+
+        .overall-test-section td {
+            padding: 0 10px 0 10px;
+        }
+
+        .overall-test-main-data {
+            font-family: Segoe UI Semibold, Segoe UI, Helvetica, Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        .overall-test-additional-data,
+        .overall-test-additional-data td {
+            font-size: 13pt;
+        }
+
+        table.responsiveTable {
+            background-color: #f0f7ff;
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Segoe UI, Helvetica, Arial, sans-serif;
+        }
+
+        table.responsiveTable td,
+        table.responsiveTable th {
+            border: 1px solid #b3d1f7;
+            padding: 3px 3px;
+        }
+
+        table.responsiveTable tbody td {
+            font-size: 14px;
+            color: #000000;
+        }
+
+        table.responsiveTable tr:nth-child(even) {
+            background: #e6f0fa;
+        }
+
+        table.responsiveTable thead {
+            background: #2196F3;
+            height: 30px;
+        }
+
+        table.responsiveTable thead th {
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            padding: 2px;
+        }
+
+        table.responsiveTable thead th:first-child {
+            border-left: none;
+        }
+
+        a, a:link, a:active {
+        color: #1565c0;
+        }
+        a:visited {
+        color: #1976d2;
+        }
+    </style>
+    <p>Hi,</p>
+
+    {{#if summary.teamReport}}
+      <p>There are tests running in the {{summary.buildInfo.pipelineType}} pipeline which belongs to your team.</p>
+    {{else}}
+      <p>
+        This email is being sent due to the following tests running in the {{summary.buildInfo.pipelineType}} pipeline.
+      </p>
+    {{/if}}
+
+    <p>Please look into these test results.</p>
+
+    <h2>
+      {{summary.testRunName}} - {{summary.date}} - {{summary.status}}
+    </h2>
+
+    <table style="width: 90%;" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="padding: 10px 30px 10px 30px;background-color: #f0f7ff;">
+                <table class="responsive-table" border="0" width="100%" cellspacing="0" cellpadding="3" style="background-color: #f0f7ff; border:0px !important; padding: 3px 3px;">
+                    <tbody>
+                        <tr>
+                            <td>Build ID:</td>
+                            <td><strong><a href="{{summary.buildInfo.buildLink}}">{{summary.buildInfo.buildId}}</a></strong></td>
+                            <td>Repository:</td>
+                            <td><strong>{{summary.buildInfo.buildRepository}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Build Number:</td>
+                            <td><strong><a href="{{summary.buildInfo.buildLink}}">{{summary.buildInfo.buildNumber}}</a></strong></td>
+                            <td>Branch:</td>
+                            <td><strong>{{summary.buildInfo.buildBranch}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Test Results:</td>
+                            <td><strong><a href="{{summary.buildInfo.testLink}}">Test Results</a></strong></td>
+                            <td>Test Artifacts:</td>
+                            <td><strong><a href="{{summary.buildInfo.artifactsLink}}">Test artifacts</a></strong></td>
+                        </tr>
+                        <tr>
+                            <td>Commit ID:</td>
+                            <td><strong>{{summary.buildInfo.commitId}}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #2196F3; height:30px; font-weight:bold; padding:5px; color:#fff;">
+                Test Results - {{ summary.buildInfo.pipelineType
+                }} [{{summary.buildInfo.envType}} - {{summary.buildInfo.runType}} - {{summary.buildInfo.runEnv}} - {{summary.buildInfo.geo}}]
+            </td>
+        </tr>
+
+        <tr>
+            <td style='padding: 20px 30px 30px 30px; color: black; background: #f0f7ff;'>
+
+                <!--TEST SECTION -->
+                <table class="mobile-center single-line overall-test-section" style="width: 100%; background-color: #f0f7ff;">
+                    <tbody>
+                        <tr class="overall-test-header">
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;font-size:12pt;">TOTAL
+                                TESTS
+                            </td>
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;font-size:12pt;">FAILED
+                                TESTS
+                            </td>
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;font-size:12pt;">PASS
+                                RATE
+                            </td>
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;font-size:12pt;">DURATION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;background-color: #f0f7ff;">
+                                <table style="border: 0px;background-color: #f0f7ff;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="overall-test-main-data"
+                                                style="padding: 0 10px 0 10px; font-family: Segoe UI Semibold, Segoe UI, Helvetica, Arial, sans-serif;font-size:30px;">
+                                                {{summary.totalTests}}</td>
+                                            <td class="overall-test-additional-data" style="padding: 0 10px 0 10px;">
+                                                <table style="border: 0px;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding: 0 10px 0 0px;">{{summary.totalPassed}}</td>
+                                                            <td style="padding: 0 0px 0 10px;">Passed</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 0 10px 0 0px;">{{summary.totalFailures}}</td>
+                                                            <td style="padding: 0 0px 0 10px;">Failed</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding: 0 10px 0 0px;">{{summary.totalSkipped}}</td>
+                                                            <td style="padding: 0 0px 0 10px;">Skipped</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px;">
+                                <!--FAILED TESTS SECTION-->
+                                <table style="border: 0px;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="overall-test-main-data"
+                                                style="padding: 0 10px 0 10px; font-family: Segoe UI Semibold, Segoe UI, Helvetica, Arial, sans-serif;font-size:30px;">
+                                                {{summary.totalFailures}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td class="overall-test-main-data"
+                                style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px; font-family: Segoe UI Semibold, Segoe UI, Helvetica, Arial, sans-serif;font-size:30px;">
+                                {{summary.passRate}}%</td>
+                            <td class="overall-test-main-data"
+                                style="border-right: 2px #b3d1f7 solid; padding: 0 10px 0 10px; font-family: Segoe UI Semibold, Segoe UI, Helvetica, Arial, sans-serif;font-size:30px;">
+                                {{summary.totalDuration}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td style='width:100%;background: #f0f7ff;'>
+                <table class="responsiveTable">
+                    <thead>
+                        <tr>
+                            <th style="width:50%"> Test Name </th>
+                            <th style="width:15%"> Owning Team </th>
+                            <th style="width:5%"> Retries </th>
+                            <th style="width:5%"> Status </th>
+                            <th style="width:15%"> Error </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each summary.failures}}
+                        <tr>
+                            <td valign="top">{{this.title}}</td>
+                            <td valign="top">{{this.owner}}</td>
+                            <td valign="top">{{this.retries}}</td>
+                            <td valign="top" style="font-weight:bold;">{{this.status}}</td>
+                            <td valign="top">{{this.error}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+    <br />
+    <p>
+      For questions, concerns, or suggestions, please contact your test automation team or the test reporting system owner.
+    </p>
+    <p>Thanks & Regards,<br>Automated Test Reporter</p>
+
+</body>
+
+</html>

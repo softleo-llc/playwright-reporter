@@ -1,0 +1,18 @@
+{
+    "Activities": {
+        "email": ["activitiesteam@microsoft.com"],
+        "areaPath": "OneCRM\\Client\\UnifiedClient\\Activities UI"
+    },
+    "Frontend": {
+        "email": ["qa-team@example.com", "lead@example.com"],
+        "areaPath": "Web/Frontend/Search"
+    },
+    "Backend": {
+        "email": ["backend@example.com"],
+        "areaPath": "Web/Backend/API"
+    },
+    "fallbackTeam": {
+        "email": ["backend@example.com"],
+        "areaPath": "Web/Backend/API"
+    }
+}
