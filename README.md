@@ -11,91 +11,53 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
 ## **✨ Features**
 
 - 🎨 **Smart Colorized Output**:
-
-    - ✅ Passed tests (Green)
-    - ❌ Failed tests (Red)
-    - 🔄 Retry attempts (Yellow)
-    - ⚠️ Skipped tests (Gray)
-    - 🚀 Test run status (Bright Magenta)
+  - ✅ Passed tests (Green)
+  - ❌ Failed tests (Red)
+  - 🔄 Retry attempts (Yellow)
+  - ⚠️ Skipped tests (Gray)
+  - 🚀 Test run status (Bright Magenta)
 
 - 🧠 **Intelligent Failure Analysis**:
-
+  - **Error Cateogrization**    
     - Automatic **error categorization** (ElementNotFound, Timeout, SelectorChanged, etc.)
-        - This will help identifying major area of concern through error reporting.
     - Test code block extraction for context-aware reporting
-    - AI-powered fix suggestions for common test failures
-    - Structured JSON output for failure analysis
-     - **AI Suggestions**
+  - **Flaky Test Detection and AI-Powered Fix Suggestions**:
+    - Identifies flaky tests and provides targeted fix suggestions
+    - Helps teams reduce test flakiness and improve suite reliability    
+    - Uses Mistral-based models for generating actionable fixes
+    - Prompts and suggestions are saved for review and learning
 
-        - GenAI-powered fix suggestions for common test failures.
-        - Uses Mistral-based models for generating actionable fixes.
-        - Prompts and suggestions are saved for review and learning.
-    - **Flaky Test Fixes**
-    
-        - Identifies flaky tests and provides targeted fix suggestions.
-        - Helps teams reduce test flakiness and improve suite reliability.
 - 📊 **Comprehensive Metrics**:
+  - Total execution time with smart formatting
+  - Average test duration analysis
+  - Slowest test identification and ranking
+  - Pass/fail/skip statistics
 
-    - Total execution time with smart formatting
-    - Average test duration analysis
-    - Slowest test identification
-    - Top slowest tests ranking
-    - Pass/fail/skip statistics
-
-- **Automated Email Notifications**
-
-- Sends test run summary emails to a configurable list of recipients.
-- Uses Handlebars templates for customizable email content and layout.
-- SMTP credentials can be provided via reporter options or environment variables.
-- Logs email sending status and recipient list for traceability.
 - 📧 **Automated Email Notifications**:
-    - Send test run summary emails to a configurable list of recipients.
-    - Uses Handlebars templates for customizable email content and layout.
-    - SMTP credentials can be provided via reporter options or environment variables.
-    - Logs email sending status and recipient list for traceability.
+  - Sends test run summary emails to configurable recipients
+  - Uses Handlebars templates for customizable email content
+  - SMTP credentials via reporter options or environment variables
+  - Logs email sending status for traceability
 
 - 📈 **Telemetry & Analytics**:
+  - Local SQLite database for storing test run history and results
+  - Detailed tracking of tests, results, and failures
+  - Support for tracking Azure DevOps operations
+  - Reliability trends and flaky test identification
+  - Browser and environment-specific failure tracking
+  - Pass rate monitoring across test runs
 
-    - Local SQLite database for storing test run history and results
-    - Detailed tracking of test runs, individual test results, and failures
-    - Support for tracking Azure DevOps operations through logs
-    - Easy querying for reliability trends and flaky test identification
-    - Browser and environment-specific failure tracking
-    - Pass rate monitoring across test runs
-
-- **Execution Environment Detection**
-
-    - Automatically detects if tests are running locally or in a CI pipeline (GitHub Actions, Azure DevOps, GitLab CI, Jenkins).
-    - Provides links to build artifacts, test results, and commits for supported CI systems.
-
-
-
-
+- 🔍 **Execution Environment Detection**:
+  - Automatically detects local or CI pipeline runs (GitHub Actions, Azure DevOps, GitLab CI, Jenkins)
+  - Provides links to build artifacts, test results, and commits
 
 - 🛠 **Advanced Features**:
-
-
-    - Team ownership assignment and tracking
-    - Configurable slow test thresholds
-    - Timeout warnings
-    - Stack trace controls
-    - Retry attempt tracking
-    - CI integration with build information
-    - Test history tracking and comparison
-   
-
-- 📝 **Rich Reporting**:
-
-    - Detailed failure analysis with categorization
-    - GenAI-powered fix suggestions
-    - Clear error messages
-    - Formatted stack traces
-    - Test timing insights
-    - Skipped test warnings
-    - Test history tracking
-    - CI environment detection
-
-
+  - Team ownership assignment and tracking
+  - Configurable slow test thresholds
+  - Timeout warnings
+  - Stack trace controls
+  - Retry attempt tracking
+  - Test history tracking and comparison
 
 ## **🚀 Installation**
 
@@ -104,8 +66,6 @@ Install the package using npm:
 ```bash
 npm install playwright-test-reporter --save-dev
 ```
-
----
 
 ## **Usage**
 
@@ -153,6 +113,9 @@ export default defineConfig({
 | `sendEmail`               | `boolean` | `false`                 | Enable/disable sending email notifications after test run        |
 | `smtpUser`                | `string`  | `process.env.SMTP_USER` | SMTP username for sending emails                                 |
 | `smtpPass`                | `string`  | `process.env.SMTP_PASS` | SMTP password for sending emails                                 |
+| `pushToTelemetry`         | `boolean` | `false`                 | Enable storing results in SQLite database for analytics          |
+| `browserName`             | `string`  | `undefined`             | Specify browser name for telemetry                               |
+| `headless`                | `boolean` | `undefined`             | Specify headless mode for telemetry                              |
 
 ### **AI-Powered Fix Suggestions**
 
@@ -205,14 +168,8 @@ reporter: [
 ```
 
 **Email Template:**
-
 - The reporter uses a Handlebars template (`src/handlebars/email.handlebars`) for formatting the email body.
 - The template receives a `summary` object with all test run details and a grid of failing tests.
-
-**Logs:**
-
-- The reporter logs when it is preparing to send an email, the subject, and the recipient list.
-- Success or failure of the email send is also logged to the console.
 
 ### **Team Ownership**
 
@@ -237,6 +194,7 @@ test('[Frontend] should login successfully', async ({page}) => {
     // Test implementation
 });
 ```
+
 ## **Telemetry & Analytics**
 
 The reporter can store test run results and detailed test information in a local SQLite database for historical analysis and reporting.
@@ -262,7 +220,6 @@ reporter: [
 ### **Stored Data**
 
 The telemetry system stores:
-
 - **Test Run Information**: Overall statistics, pass/fail counts, durations, browser info
 - **Individual Test Results**: Detailed information about each test including failures
 - **ADO Operations**: When using Azure DevOps integration, operation logs are stored
@@ -270,7 +227,6 @@ The telemetry system stores:
 ### **Database Location**
 
 By default, the SQLite database is stored in:
-
 ```
 ./database/reporter.db
 ```
@@ -278,18 +234,9 @@ By default, the SQLite database is stored in:
 ### **Schema Overview**
 
 The database contains these main tables:
-
 1. **testrun**: Stores summary data for each test run
 2. **testresults**: Stores details for each individual test
 3. **ado_logs**: Logs Azure DevOps operations (when using ADO integration)
-
-### **Use Cases**
-
-- Track test reliability over time
-- Identify flaky tests and failure patterns
-- Generate custom reports and visualizations
-- Analyze test performance trends
-- Monitor browser-specific failures
 
 ### **Accessing Telemetry Data**
 
@@ -331,7 +278,6 @@ db.all(
 );
 ```
 
-
 ### **Working with Test History**
 
 The reporter includes utilities for working with test history:
@@ -352,22 +298,13 @@ console.log('Fixed tests:', fixed);
 ### **JSON Output Files**
 
 The reporter generates the following JSON files:
-
-- **testSummary.json**: Contains complete test run summary and metrics
+- **testSummary.json**: Complete test run summary and metrics
 - **testFailures.json**: Detailed information about test failures
 - **.last-run.json**: Status of the last test run for comparison
 - **prompts/\*.md**: AI prompts for test failures
 - **fixes/fix-\*.md**: AI-generated fix suggestions
 
-These files can be used for:
-
-- CI/CD pipeline integration
-- Test history analysis
-- Trend monitoring and reporting
-- Build pass/fail decisions
-- Automatic PR comments with fix suggestions
-
----
+These files can be used for CI/CD pipeline integration, test history analysis, trend monitoring, build pass/fail decisions, and automatic PR comments with fix suggestions.
 
 ## **📋 Output Examples**
 
@@ -478,19 +415,14 @@ We welcome contributions! Here's how you can help:
 5. Open a Pull Request
 
 Please ensure your PR:
-
 - Follows the existing code style
 - Includes appropriate tests
 - Updates documentation as needed
 - Describes the changes made
 
----
-
 ## **📝 License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 ## **🙏 Acknowledgments**
 
