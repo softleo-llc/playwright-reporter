@@ -1,5 +1,5 @@
 {
-    "name": "@softleo/playwright-ai-test-reporter",
+    "name": "@softleo/playwright-reporter",
     "version": "0.0.1",
     "description": "A pipeline-friendly custom reporter for Playwright tests with enhanced logging.",
     "main": "dist/reporter.js",
