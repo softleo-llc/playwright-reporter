@@ -25,7 +25,15 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
     - Test code block extraction for context-aware reporting
     - AI-powered fix suggestions for common test failures
     - Structured JSON output for failure analysis
+     - **AI Suggestions**
 
+        - GenAI-powered fix suggestions for common test failures.
+        - Uses Mistral-based models for generating actionable fixes.
+        - Prompts and suggestions are saved for review and learning.
+    - **Flaky Test Fixes**
+    
+        - Identifies flaky tests and provides targeted fix suggestions.
+        - Helps teams reduce test flakiness and improve suite reliability.
 - 📊 **Comprehensive Metrics**:
 
     - Total execution time with smart formatting
@@ -40,28 +48,33 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
 - Uses Handlebars templates for customizable email content and layout.
 - SMTP credentials can be provided via reporter options or environment variables.
 - Logs email sending status and recipient list for traceability.
+- 📧 **Automated Email Notifications**:
+    - Send test run summary emails to a configurable list of recipients.
+    - Uses Handlebars templates for customizable email content and layout.
+    - SMTP credentials can be provided via reporter options or environment variables.
+    - Logs email sending status and recipient list for traceability.
+
+- 📈 **Telemetry & Analytics**:
+
+    - Local SQLite database for storing test run history and results
+    - Detailed tracking of test runs, individual test results, and failures
+    - Support for tracking Azure DevOps operations through logs
+    - Easy querying for reliability trends and flaky test identification
+    - Browser and environment-specific failure tracking
+    - Pass rate monitoring across test runs
 
 - **Execution Environment Detection**
 
     - Automatically detects if tests are running locally or in a CI pipeline (GitHub Actions, Azure DevOps, GitLab CI, Jenkins).
     - Provides links to build artifacts, test results, and commits for supported CI systems.
 
-- **AI Suggestions**
 
-    - GenAI-powered fix suggestions for common test failures.
-    - Uses Mistral-based models for generating actionable fixes.
-    - Prompts and suggestions are saved for review and learning.
 
-- **Flaky Test Fixes**
 
-    - Identifies flaky tests and provides targeted fix suggestions.
-    - Helps teams reduce test flakiness and improve suite reliability.
 
 - 🛠 **Advanced Features**:
 
-    - **Generative AI** integration for intelligent fix suggestions for **Flaky tests**.
-        - Using `Mistral` based `mistral-large-latest` model for generating fixes.
-    - Accessibility snapshot support (placeholder ready)
+
     - Team ownership assignment and tracking
     - Configurable slow test thresholds
     - Timeout warnings
@@ -69,9 +82,7 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
     - Retry attempt tracking
     - CI integration with build information
     - Test history tracking and comparison
-    - **Execution Environment Detection**:
-        - Automatically detects whether tests are running locally or in a CI pipeline (e.g., GitHub Actions, Azure DevOps, GitLab CI, Jenkins).
-        - Provides links to build artifacts, test results, and commits for supported CI systems.
+   
 
 - 📝 **Rich Reporting**:
 
@@ -84,11 +95,7 @@ An intelligent, AI-powered reporter for Playwright tests that enhances debugging
     - Test history tracking
     - CI environment detection
 
-- 📧 **Automated Email Notifications**:
-    - Send test run summary emails to a configurable list of recipients.
-    - Uses Handlebars templates for customizable email content and layout.
-    - SMTP credentials can be provided via reporter options or environment variables.
-    - Logs email sending status and recipient list for traceability.
+
 
 ## **🚀 Installation**
 
@@ -230,6 +237,100 @@ test('[Frontend] should login successfully', async ({page}) => {
     // Test implementation
 });
 ```
+## **Telemetry & Analytics**
+
+The reporter can store test run results and detailed test information in a local SQLite database for historical analysis and reporting.
+
+### **Enabling Telemetry**
+
+Add the `pushToTelemetry` option to your configuration:
+
+```typescript
+reporter: [
+    [
+        'playwright-test-reporter',
+        {
+            // ...other options...
+            pushToTelemetry: true,
+            browserName: 'chromium', // Optional: specify browser name
+            headless: true,          // Optional: specify headless mode
+        },
+    ],
+],
+```
+
+### **Stored Data**
+
+The telemetry system stores:
+
+- **Test Run Information**: Overall statistics, pass/fail counts, durations, browser info
+- **Individual Test Results**: Detailed information about each test including failures
+- **ADO Operations**: When using Azure DevOps integration, operation logs are stored
+
+### **Database Location**
+
+By default, the SQLite database is stored in:
+
+```
+./database/reporter.db
+```
+
+### **Schema Overview**
+
+The database contains these main tables:
+
+1. **testrun**: Stores summary data for each test run
+2. **testresults**: Stores details for each individual test
+3. **ado_logs**: Logs Azure DevOps operations (when using ADO integration)
+
+### **Use Cases**
+
+- Track test reliability over time
+- Identify flaky tests and failure patterns
+- Generate custom reports and visualizations
+- Analyze test performance trends
+- Monitor browser-specific failures
+
+### **Accessing Telemetry Data**
+
+You can access the SQLite database using any SQLite client or programmatically:
+
+```typescript
+import sqlite3 from 'sqlite3';
+import path from 'path';
+
+// Connect to the database
+const db = new sqlite3.Database(path.join(process.cwd(), 'database', 'reporter.db'));
+
+// Example: Query recent test runs
+db.all('SELECT * FROM testrun ORDER BY id DESC LIMIT 10', (err, rows) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('Recent test runs:', rows);
+});
+
+// Example: Find frequently failing tests
+db.all(
+    `
+  SELECT test_title, COUNT(*) as failure_count 
+  FROM testresults 
+  WHERE status = 'failed' 
+  GROUP BY test_title 
+  ORDER BY failure_count DESC 
+  LIMIT 10
+`,
+    (err, rows) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log('Most frequently failing tests:', rows);
+    },
+);
+```
+
 
 ### **Working with Test History**
 
