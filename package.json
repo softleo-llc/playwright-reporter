@@ -43,7 +43,7 @@
     },
     "scripts": {
         "build": "tsc",
-        "lint:eslint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\" --fix",
+        "lint:eslint": "eslint \"src/**/*.ts\" --fix",
         "lint:prettier": "prettier . --write",
         "lint": "npm run lint:eslint && npm run lint:prettier",
         "prettier": "prettier . --write",
